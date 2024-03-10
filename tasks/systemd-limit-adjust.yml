@@ -1,0 +1,9 @@
+---
+- name: Adjusting the systemd limit
+  ansible.builtin.blockinfile:
+    path: /etc/systemd/system.conf
+    block: |
+      DefaultLimitNOFILE=65000
+      DefaultLimitNPROC=65000
+      DefaultTasksMax=65000
+     

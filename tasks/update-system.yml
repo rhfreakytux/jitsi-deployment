@@ -1,0 +1,6 @@
+---
+- name: Upgrade the system
+  ansible.builtin.apt:
+    upgrade: dist
+    update_cache: true
+    autoremove: true

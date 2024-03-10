@@ -1,0 +1,55 @@
+---
+- name: Deploying Jitsi Server
+  hosts: all 
+  become: True
+  vars:
+    public_ip: 0.0.0.0
+    host_name: example.com
+
+  tasks: 
+    - name: Update/Upgrade the system
+      import_tasks:
+        file: tasks/update-system.yml
+
+    - name: Pre-installation packages
+      import_tasks:
+        file: tasks/app-install.yml
+
+    - name: Change the hostname 
+      import_tasks:
+        file: tasks/hostname-setup.yml
+
+    - name: Update the /etc/hosts
+      import_tasks:
+        file: tasks/hostfile-update.yml
+
+    - name: Securing the server
+      import_tasks:
+        file: tasks/securing-server.yml
+
+    - name: Firewall Policy for services
+      import_tasks:
+        file: tasks/firewall-policy.yml
+
+    - name: Setup Jitsi
+      import_tasks:
+        file: tasks/jitsi-setup.yml
+
+    - name: Systemd Limit Update
+      import_tasks:
+        file: tasks/systemd-limit-adjust.yml
+
+    - name: Information
+      ansible.builtin.debug: 
+        msg: | 
+          "Since, we're preferring automated installation method of
+          Jitsi Server, don't forget to install jitsi-meet manually
+          and do system reload. 
+
+          ######## apt install jitsi-meet #########
+
+          setup everything and then execute, 
+        
+          ####### systemctl daemon-reload ########
+          ####### systemctl restart jitsi-videobridge2#############"
+          

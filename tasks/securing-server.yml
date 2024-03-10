@@ -1,0 +1,9 @@
+--- 
+- name: Restricting the SSH login to a user
+  ansible.builtin.lineinfile: 
+    line: "AllowUsers {{ ssh_permit_username }}" 
+    path: /etc/ssh/sshd_config
+    group: root
+    owner: root
+    mode: '0644'
+    

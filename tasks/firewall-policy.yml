@@ -1,0 +1,36 @@
+---
+- name: Enabling the ufw
+  community.general.ufw:
+    state: enabled
+    logging: 'on'
+
+- name: Rate Limit on SSH ufw policy
+  community.general.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
+
+- name: Adding the OpenSSH ufw policy
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Adding the NGINX ufw policy
+  community.general.ufw: 
+    rule: allow
+    name: 'Nginx Full'
+
+- name: Adding the TCP ports ufw policy
+  community.general.ufw:
+    rule: allow
+    port: 5349
+    proto: tcp
+
+- name: Adding the UDP ports ufw policy
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: udp
+  loop:
+    - 10000
+    - 3478

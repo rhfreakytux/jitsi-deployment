@@ -1,0 +1,30 @@
+--- 
+- name: Prosody Deployment
+  block:
+    - name: Downloading Prosody Keyring
+      ansible.builtin.get_url:
+        url: https://prosody.im/files/prosody-debian-packages.key
+        dest: /etc/apt/keyrings/prosody-debian-packages.key
+
+    - name: Setting up Prosody Repo
+      ansible.builtin.apt_repository: 
+        repo: "deb [signed-by=/etc/apt/keyrings/prosody-debian-packages.key] http://packages.prosody.im/debian {{ ansible_distribution_release }} main"
+        state: present
+        filename: prosody-debian-packages
+
+- name: Jitsi Deployment
+  block:
+    - name: Downloading Jitsi Keyring
+      ansible.builtin.shell: |
+        curl -sL https://download.jitsi.org/jitsi-key.gpg.key | sudo sh -c 'gpg --dearmor > /usr/share/keyrings/jitsi-keyring.gpg'
+          
+    - name: Setting up Jitsi Repo
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/jitsi-keyring.gpg] https://download.jitsi.org stable/"
+        state: present
+        filename: jitsi-stable
+
+- name: Update the repo
+  ansible.builtin.apt: 
+    update_cache: yes
+  

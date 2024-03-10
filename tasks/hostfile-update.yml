@@ -1,0 +1,7 @@
+- name: Update the /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "{{ public_ip }} {{ host_name }}"
+    owner: root
+    group: root
+    mode: '0644'
