@@ -10,5 +10,7 @@ As we're doing jitsi-meet automated installation and not manual, we're only sett
 After installing the jisti-meet and setting up all the required things, do exeucte to reload the systemd process limit restrictions: 
 
     # systemctl daemon-reload && systemctl restart jitsi-videobridge2
+
+**NOTE:** Don't forget to change variables value with required as per yours. 
    
 Feel free to commit. 
